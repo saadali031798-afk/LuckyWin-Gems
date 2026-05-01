@@ -3,158 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Win Gems - All Games</title>
+    <title>Fantasy Gems - Ultimate Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f1f4f3; }
-        .teal-gradient { background: linear-gradient(180deg, #00b894 0%, #019a78 100%); }
-        .blue-banner { background: linear-gradient(90deg, #1e3799 0%, #0984e3 100%); border-radius: 15px; }
-        .game-item { background: white; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eef0f1; }
-        .game-icon { width: 50px; height: 50px; border-radius: 10px; margin-bottom: 5px; display: flex; items-center; justify-content: center; color: white; font-size: 24px; }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #ddd; z-index: 100; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .section-title { font-weight: 800; font-size: 14px; color: #2d3436; margin: 15px 15px 5px 15px; display: flex; align-items: center; gap: 5px; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Roboto:wght@300;700&display=swap');
+        body { font-family: 'Roboto', sans-serif; background: #010409; color: #fff; overflow-x: hidden; }
+        .game-window { display: none; position: fixed; inset: 0; background: #0b0e11; z-index: 1000; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
+        /* Aviator Special Styles */
+        .aviator-bg { background: #1b0202; height: 250px; position: relative; border-radius: 20px; border: 1px solid #ff0044; }
+        #aviator-plane { position: absolute; bottom: 20px; left: 20px; width: 40px; transition: 0.1s linear; }
+        
+        /* Mines Special Styles */
+        .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+        .mine-tile { background: #21262d; aspect-ratio: 1; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; border-bottom: 4px solid #000; }
+        .mine-tile.active { background: #30363d; transform: translateY(2px); border-bottom: 0; }
+        
+        /* Wingo Special Styles */
+        .wingo-circle { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 2px solid rgba(255,255,255,0.2); }
+        
+        .loader-full { display: none; position: fixed; inset: 0; background: #000; z-index: 9999; flex-direction: column; align-items: center; justify-content: center; }
+        .category-scroll::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="pb-24">
 
-    <header class="teal-gradient p-4 flex justify-between items-center text-white sticky top-0 z-50 shadow-md">
-        <div class="flex items-center gap-2">
-            <i class="fas fa-gem"></i>
-            <span class="font-black italic tracking-tighter">LUCKY WIN GEMS</span>
-        </div>
-        <div class="flex gap-4 items-center">
-            <button class="bg-yellow-400 text-teal-900 px-3 py-1 rounded-full text-[10px] font-black shadow-lg">APP DOWNLOAD</button>
-            <i class="fas fa-headset text-lg"></i>
+    <div id="bootLoader" class="loader-full">
+        <div class="w-16 h-16 border-4 border-t-cyan-500 border-gray-800 rounded-full animate-spin"></div>
+        <p class="mt-4 font-black text-cyan-400 tracking-[5px] animate-pulse uppercase text-xs">Initializing Engines...</p>
+    </div>
+
+    <header class="p-4 flex justify-between items-center bg-[#0d1117] border-b border-gray-800 sticky top-0 z-50">
+        <h1 style="font-family: 'Orbitron';" class="text-xl font-black text-cyan-400">FANTASY GEMS</h1>
+        <div class="flex items-center bg-[#161b22] px-3 py-1 rounded-full border border-gray-700">
+            <i class="fas fa-coins text-yellow-500 mr-2"></i>
+            <span id="balDisplay" class="font-bold text-sm">0.00</span>
         </div>
     </header>
 
-    <div class="p-3">
-        <div class="blue-banner h-32 flex items-center p-4 relative overflow-hidden shadow-lg">
-            <div class="z-10">
-                <h2 class="text-white font-black italic text-xl">CHICKEN ROAD 2</h2>
-                <p class="text-white text-[10px] opacity-80">Win daily rewards up to 100k</p>
-                <button class="mt-2 bg-white text-blue-800 px-4 py-1 rounded-full text-[9px] font-black">PLAY NOW</button>
-            </div>
-            <i class="fas fa-rocket text-7xl text-white opacity-10 absolute -right-2 top-2 rotate-12"></i>
+    <div class="p-4">
+        <div class="rounded-3xl overflow-hidden shadow-2xl relative h-40 bg-gradient-to-r from-blue-900 to-black p-6 flex flex-col justify-end border border-blue-500/30">
+            <div class="absolute top-4 right-4 opacity-20"><i class="fas fa-crown text-6xl"></i></div>
+            <p class="text-[10px] font-black text-blue-400 uppercase">VIP Membership Active</p>
+            <h2 class="text-2xl font-black italic">WIN BIG EVERY DAY</h2>
+            <button onclick="openDeposit()" class="mt-3 bg-cyan-500 text-[10px] font-black w-fit px-6 py-2 rounded-full">RECHARGE NOW</button>
         </div>
     </div>
 
-    <div class="bg-white mx-3 p-4 rounded-xl shadow-sm flex justify-between items-center border border-gray-100">
-        <div class="flex items-center gap-3">
-            <div class="bg-teal-100 p-2 rounded-full"><i class="fas fa-wallet text-teal-600"></i></div>
-            <div>
-                <p class="text-gray-400 text-[10px] font-bold uppercase">Balance</p>
-                <h3 class="text-xl font-black">Rs 0.00</h3>
-            </div>
-        </div>
-        <button class="bg-orange-500 text-white px-6 py-2 rounded-lg font-black shadow-md">DEPOSIT</button>
+    <div class="flex gap-4 overflow-x-auto px-4 py-2 category-scroll border-b border-gray-900">
+        <button class="bg-cyan-600 px-6 py-2 rounded-full text-xs font-black">All</button>
+        <button class="bg-gray-800 px-6 py-2 rounded-full text-xs font-black text-gray-400">Slots</button>
+        <button class="bg-gray-800 px-6 py-2 rounded-full text-xs font-black text-gray-400">Casino</button>
+        <button class="bg-gray-800 px-6 py-2 rounded-full text-xs font-black text-gray-400">PVP</button>
     </div>
 
-    <div class="flex gap-4 overflow-x-auto p-4 no-scrollbar">
-        <button class="bg-teal-500 text-white px-6 py-1.5 rounded-full text-xs font-bold shadow-md">All</button>
-        <button class="bg-white text-gray-500 px-6 py-1.5 rounded-full text-xs font-bold shadow-sm">Lottery</button>
-        <button class="bg-white text-gray-500 px-6 py-1.5 rounded-full text-xs font-bold shadow-sm">Original</button>
-        <button class="bg-white text-gray-500 px-6 py-1.5 rounded-full text-xs font-bold shadow-sm">Slots</button>
-    </div>
+    <div class="p-4 grid grid-cols-2 gap-4">
+        <div onclick="openGame('aviator')" class="bg-[#0d1117] rounded-3xl p-1 border border-gray-800 overflow-hidden">
+            <img src="https://i.ibb.co/6P2T3yV/aviator-new.png" class="h-32 w-full object-cover rounded-2xl">
+            <div class="p-3"><p class="text-xs font-black uppercase">Aviator (Live)</p><p class="text-[9px] text-gray-500">Official Spribe Gaming</p></div>
+        </div>
 
-    <div class="section-title"><i class="fas fa-fire text-red-500"></i> HOT GAMES</div>
-    <div class="grid grid-cols-3 gap-3 px-3">
-        <div class="game-item">
-            <div class="game-icon bg-red-500 shadow-inner"><i class="fas fa-plane"></i></div>
-            <span class="text-[9px] font-black">AVIATOR</span>
+        <div onclick="openGame('mines')" class="bg-[#0d1117] rounded-3xl p-1 border border-gray-800 overflow-hidden">
+            <img src="https://i.ibb.co/0V1S7s8/mines.png" class="h-32 w-full object-cover rounded-2xl">
+            <div class="p-3"><p class="text-xs font-black uppercase">Mines (V2)</p><p class="text-[9px] text-gray-500">Instant Win Crypto</p></div>
         </div>
-        <div class="game-item">
-            <div class="game-icon bg-blue-600 shadow-inner"><i class="fas fa-bomb"></i></div>
-            <span class="text-[9px] font-black">MINES</span>
-        </div>
-        <div class="game-item">
-            <div class="game-icon bg-yellow-500 shadow-inner"><i class="fas fa-gem"></i></div>
-            <span class="text-[9px] font-black">FORTUNE</span>
+
+        <div onclick="openGame('wingo')" class="bg-[#0d1117] rounded-3xl p-1 border border-gray-800 overflow-hidden">
+            <img src="https://i.ibb.co/XzYwZzM/wingo-banner.png" class="h-32 w-full object-cover rounded-2xl">
+            <div class="p-3"><p class="text-xs font-black uppercase">Wingo Color</p><p class="text-[9px] text-gray-500">1 Min Lottery Game</p></div>
         </div>
     </div>
 
-    <div class="section-title"><i class="fas fa-ticket text-teal-500"></i> LOTTERY</div>
-    <div class="grid grid-cols-3 gap-3 px-3">
-        <div class="game-item">
-            <div class="game-icon bg-teal-600 shadow-inner"><i class="fas fa-dice"></i></div>
-            <span class="text-[9px] font-black">WINGO</span>
+    <div id="window-aviator" class="game-window p-4">
+        <header class="flex justify-between items-center mb-4">
+            <button onclick="closeGame()"><i class="fas fa-arrow-left"></i></button>
+            <span class="font-black text-red-500 italic">AVIATOR</span>
+            <div id="aviBal" class="text-xs font-bold bg-black px-3 py-1 rounded-full">Rs 0.00</div>
+        </header>
+        <div class="aviator-bg mb-6 flex flex-col items-center justify-center">
+            <h2 id="avi-multi" class="text-6xl font-black text-white italic">1.00x</h2>
+            <img id="aviator-plane" src="https://i.ibb.co/6P2T3yV/aviator-new.png">
         </div>
-        <div class="game-item">
-            <div class="game-icon bg-purple-600 shadow-inner"><i class="fas fa-star"></i></div>
-            <span class="text-[9px] font-black">5D LOTRE</span>
-        </div>
-        <div class="game-item">
-            <div class="game-icon bg-pink-600 shadow-inner"><i class="fas fa-circle-dot"></i></div>
-            <span class="text-[9px] font-black">K3 LOTRE</span>
-        </div>
-    </div>
-
-    <div class="section-title"><i class="fas fa-gamepad text-indigo-500"></i> SLOTS & FISHING</div>
-    <div class="grid grid-cols-3 gap-3 px-3">
-        <div class="game-item">
-            <div class="game-icon bg-orange-600 shadow-inner"><i class="fas fa-fish"></i></div>
-            <span class="text-[9px] font-black">FISHING</span>
-        </div>
-        <div class="game-item">
-            <div class="game-icon bg-green-600 shadow-inner"><i class="fas fa-futbol"></i></div>
-            <span class="text-[9px] font-black">PENALTY</span>
-        </div>
-        <div class="game-item">
-            <div class="game-icon bg-indigo-700 shadow-inner"><i class="fas fa-egg"></i></div>
-            <span class="text-[9px] font-black">CHICKEN</span>
-        </div>
-        <div class="game-item">
-            <div class="game-icon bg-amber-700 shadow-inner"><i class="fas fa-clover"></i></div>
-            <span class="text-[9px] font-black">777 SLOT</span>
-        </div>
-        <div class="game-item">
-            <div class="game-icon bg-red-700 shadow-inner"><i class="fas fa-dragon"></i></div>
-            <span class="text-[9px] font-black">DRAGON</span>
-        </div>
-        <div class="game-item">
-            <div class="game-icon bg-sky-500 shadow-inner"><i class="fas fa-water"></i></div>
-            <span class="text-[9px] font-black">OCEAN</span>
+        <div class="bg-[#1c2128] p-6 rounded-3xl border border-gray-800">
+            <input id="aviInput" type="number" placeholder="Enter Bet" class="w-full bg-black border border-gray-700 p-4 rounded-xl text-center mb-4 font-bold text-xl">
+            <button id="aviBtn" onclick="startAviator()" class="w-full bg-green-600 py-4 rounded-2xl font-black text-xl shadow-xl shadow-green-900/20">BET</button>
         </div>
     </div>
 
-    <div class="bg-white m-3 p-4 rounded-xl border border-gray-100 shadow-sm">
-        <p class="text-[10px] font-black text-gray-400 mb-3 uppercase">Real-Time Winners</p>
-        <div class="space-y-3">
-            <div class="flex justify-between items-center text-[10px]">
-                <span class="font-bold text-gray-700">User***521</span>
-                <span class="bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full font-black">Rs 5,420.00</span>
-            </div>
-            <div class="flex justify-between items-center text-[10px]">
-                <span class="font-bold text-gray-700">User***099</span>
-                <span class="bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full font-black">Rs 1,200.00</span>
-            </div>
-            <div class="flex justify-between items-center text-[10px]">
-                <span class="font-bold text-gray-700">User***786</span>
-                <span class="bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full font-black">Rs 15,000.00</span>
+    <div id="window-mines" class="game-window p-4">
+        <header class="flex justify-between items-center mb-6">
+            <button onclick="closeGame()"><i class="fas fa-arrow-left"></i></button>
+            <span class="font-black text-cyan-400">MINES ENGINE</span>
+            <span></span>
+        </header>
+        <div class="mines-grid mb-6" id="mines-board"></div>
+        <div class="p-4 bg-[#1c2128] rounded-3xl">
+            <input id="mineInput" type="number" placeholder="Bet Amount" class="w-full bg-black border border-gray-700 p-4 rounded-xl text-center mb-4 font-bold text-xl">
+            <button id="mineBtn" onclick="startMines()" class="w-full bg-cyan-600 py-4 rounded-2xl font-black text-xl">START GAME</button>
+        </div>
+    </div>
+
+    <div id="window-wingo" class="game-window p-4">
+        <header class="flex justify-between mb-8"><button onclick="closeGame()"><i class="fas fa-chevron-left"></i></button><span class="font-black">WINGO LIVE</span><span></span></header>
+        <div class="bg-gradient-to-b from-gray-900 to-black p-8 rounded-3xl text-center mb-6 border border-gray-800">
+            <p class="text-xs text-gray-500 font-bold mb-2 uppercase">Period Number: 20260502-001</p>
+            <h1 class="text-5xl font-black text-cyan-400 mb-4">00:<span id="timer">45</span></h1>
+            <div class="flex justify-center gap-2">
+                <div class="wingo-circle bg-green-500">G</div>
+                <div class="wingo-circle bg-purple-500">V</div>
+                <div class="wingo-circle bg-red-500">R</div>
             </div>
         </div>
+        <div class="grid grid-cols-2 gap-4">
+            <button onclick="alert('Bet Placed!')" class="bg-green-600 py-4 rounded-2xl font-black text-xl">GREEN</button>
+            <button onclick="alert('Bet Placed!')" class="bg-red-600 py-4 rounded-2xl font-black text-xl">RED</button>
+        </div>
     </div>
 
-    <nav class="bottom-nav">
-        <div class="flex flex-col items-center text-teal-600 font-black">
-            <i class="fas fa-home text-lg"></i>
-            <span class="text-[9px] mt-1">HOME</span>
+    <div id="window-deposit" class="game-window flex items-center justify-center" style="background: rgba(0,0,0,0.9);">
+        <div class="bg-[#161b22] w-full max-w-sm m-4 p-8 rounded-[2.5rem] border border-cyan-500/30">
+            <h3 class="text-center font-black mb-6">VIP DEPOSIT GATEWAY</h3>
+            <div class="bg-black p-4 rounded-2xl border border-gray-800 mb-6 text-center">
+                <p class="text-[10px] text-gray-500 font-bold mb-1">EASYPAISA / JAZZCASH</p>
+                <p class="text-xl font-black text-cyan-400 tracking-widest">03179774144</p>
+            </div>
+            <button onclick="fakeVerify()" class="w-full bg-cyan-600 py-4 rounded-2xl font-black">I HAVE TRANSFERRED</button>
+            <button onclick="closeGame()" class="w-full mt-4 text-gray-600 font-bold">CLOSE</button>
         </div>
-        <div class="flex flex-col items-center text-gray-400 font-bold">
-            <i class="fas fa-gift text-lg"></i>
-            <span class="text-[9px] mt-1">ACTIVITY</span>
-        </div>
-        <div class="flex flex-col items-center text-gray-400 font-bold">
-            <i class="fas fa-share-nodes text-lg"></i>
-            <span class="text-[9px] mt-1">PROMO</span>
-        </div>
-        <div class="flex flex-col items-center text-gray-400 font-bold">
-            <i class="fas fa-user-circle text-lg"></i>
-            <span class="text-[9px] mt-1">ACCOUNT</span>
-        </div>
-    </nav>
+    </div>
 
+    <script>
+        let balance = 0;
+        let gameActive = false;
+
+        function openGame(id) {
+            document.getElementById('bootLoader').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('bootLoader').style.display = 'none';
+                document.getElementById('window-'+id).style.display = 'block';
+                if(id === 'mines') initMinesEngine();
+                if(id === 'wingo') startTimer();
+            }, 1000);
+        }
+
+        function closeGame() {
+            document.querySelectorAll('.game-window').forEach(w => w.style.display = 'none');
+            gameActive = false;
+        }
+
+        function openDeposit() { document.getElementById('window-deposit').style.display = 'flex'; }
+
+        function updateUI() {
+            document.getElementById('balDisplay').innerText = "Rs " + balance.toFixed(2);
+            document.getElementById('aviBal').innerText = "Rs " + balance.toFixed(2);
+        }
+
+        function fakeVerify() {
+            balance += 1200; updateUI();
+            closeGame();
+            alert("Deposit Confirmed! Rs 1200 Added.");
+        }
+
+        // ================= AVIATOR ENGINE CORE =================
+        function startAviator() {
+            let bet = parseFloat(document.getElementById('aviInput').value);
+            if(isNaN(bet) || bet > balance || bet < 10) return alert("Low Balance!");
+            
+            balance -= bet; updateUI();
+            let m = 1.0;
+            let mEl = document.getElementById('avi-multi');
+            let p = document.getElementById('aviator-plane');
+            let btn = document.getElementById('aviBtn');
+            
+            btn.innerText = "CASH OUT";
+            btn.classList.replace('bg-green-600', 'bg-orange-600');
+            
+            let crash = (Math.random() < 0.3) ? 1.05 : (Math.random() * 5 + 1.2);
+            let fly = setInterval(() => {
+                m += 0.04;
+                mEl.innerText = m.toFixed(2) + "x";
+                p.style.transform = `translate(${m*10}px, -${m*15}px)`;
+                
+                if(m >= crash) {
+                    clearInterval(fly);
+                    mEl.innerHTML = '<span class="text-red-500">FLEW AWAY!</span>';
+                    btn.innerText = "BET";
+                    btn.classList.replace('bg-orange-600', 'bg-green-600');
+                    btn.onclick = startAviator;
+                }
+            }, 100);
+
+            btn.onclick = () => {
+                clearInterval(fly);
+                let win = bet * m;
+                balance += win; updateUI();
+                mEl.innerHTML = '<span class="text-green-500">WIN!</span>';
+                btn.innerText = "BET";
+                btn.classList.replace('bg-orange-600', 'bg-green-600');
+                btn.onclick = startAviator;
+            };
+        }
+
+        // ================= MINES ENGINE CORE =================
+        function initMinesEngine() {
+            const board = document.getElementById('mines-board');
+            board.innerHTML = '';
+            for(let i=0; i<25; i++) {
+                let div = document.createElement('div');
+                div.className = 'mine-tile';
+                div.onclick = () => revealTile(div);
+                board.appendChild(div);
+            }
+        }
+
+        function startMines() {
+            let bet = parseFloat(document.getElementById('mineInput').value);
+            if(isNaN(bet) || bet > balance) return alert("Deposit First!");
+            balance -= bet; updateUI();
+            initMinesEngine();
+            alert("Game Started! Pick Tiles.");
+        }
+
+        function revealTile(el) {
+            if(el.innerHTML !== '') return;
+            if(Math.random() > 0.2) {
+                el.classList.add('active');
+                el.innerHTML = '<i class="fas fa-gem text-cyan-400"></i>';
+                balance += 20; updateUI();
+            } else {
+                el.classList.add('active');
+                el.style.borderColor = 'red';
+                el.innerHTML = '<i class="fas fa-bomb text-red-500"></i>';
+                alert("BOOM! Game Over.");
+                initMinesEngine();
+            }
+        }
+
+        function startTimer() {
+            let t = 45;
+            setInterval(() => {
+                t--; if(t<0) t=59;
+                document.getElementById('timer').innerText = t < 10 ? '0'+t : t;
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
