@@ -3,93 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Win Gems</title>
+    <title>Lucky Win Gems - Professional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { 
-            width: 100%; height: 100%; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #00a884; /* Wahi Teal color jo image mein hai */
-            overflow: hidden;
-        }
-
-        /* Splash Screen */
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #00a884;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            z-index: 10000;
-        }
-
-        .splash-content { text-align: center; color: white; }
-        
-        /* Character Image Placeholder (Aapke logo ke liye) */
-        .splash-logo {
-            width: 250px; height: auto; margin-bottom: 30px;
-            filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.3));
-        }
-
-        .splash-text {
-            font-size: 20px; font-weight: bold; margin-bottom: 40px;
-            letter-spacing: 1px; text-shadow: 1px 1px 5px rgba(0,0,0,0.2);
-        }
-
-        /* Loading Bar */
-        .loader-container {
-            width: 200px; height: 6px; background: rgba(255,255,255,0.2);
-            border-radius: 10px; overflow: hidden; position: relative;
-        }
-        .loader-bar {
-            width: 0%; height: 100%; background: #f9a825; /* Gold color */
-            border-radius: 10px; animation: load 3s ease-in-out forwards;
-        }
-
-        @keyframes load {
-            0% { width: 0%; } 100% { width: 100%; }
-        }
-
-        /* Main Website (Load hone ke baad) */
-        #main-site { display: none; background: #001529; min-height: 100vh; color: white; }
-        .header { background: #00a884; padding: 15px; text-align: center; font-weight: bold; font-size: 22px; }
+        .teal-theme { background-color: #00a884; }
+        .game-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px; border-top: 1px solid #ddd; z-index: 100; }
+        .banner-slide { width: 100%; height: 160px; background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); border-radius: 15px; margin: 10px 0; display: flex; align-items: center; justify-content: center; color: white; overflow: hidden; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .game-card { border-radius: 12px; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 11px; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 pb-24">
 
-    <div id="splash-screen">
-        <div class="splash-content">
-            <img src="https://i.ibb.co/LdpXmX3/fantasy-gems-splash.png" class="splash-logo" alt="Lucky Win Gems">
-            
-            <p class="splash-text">Withdraw fast, safe and stable</p>
-            
-            <div class="loader-container">
-                <div class="loader-bar"></div>
+    <header class="teal-theme p-4 flex justify-between items-center text-white sticky top-0 z-50 shadow-md">
+        <div class="flex items-center gap-2">
+            <i class="fas fa-gem text-xl"></i>
+            <span class="font-bold tracking-wider text-lg">LUCKY WIN GEMS</span>
+        </div>
+        <div class="flex gap-4 items-center">
+            <button class="bg-white text-teal-600 px-3 py-1 rounded-full text-[10px] font-black uppercase">Download</button>
+            <i class="fas fa-headset text-lg"></i>
+        </div>
+    </header>
+
+    <div class="px-3 mt-2">
+        <div class="banner-slide shadow-lg">
+            <div class="text-center p-4">
+                <h2 class="text-2xl font-black italic mb-1">SUPER BONUS!</h2>
+                <p class="text-xs opacity-90">First Deposit Get 100% Free Gems</p>
+                <div class="mt-2 bg-yellow-400 text-blue-900 px-4 py-1 rounded-full text-[10px] font-bold inline-block">CLAIM NOW</div>
             </div>
-            
-            <p style="margin-top: 15px; font-size: 14px; opacity: 0.8;">Lucky Win Gems - Loading...</p>
         </div>
     </div>
 
-    <div id="main-site">
-        <div class="header">Lucky Win Gems</div>
-        <div style="padding: 50px; text-align: center;">
-            <h2>Welcome to Lucky Win Gems</h2>
-            <p>Aapki pro website ab tayyar ho rahi hai...</p>
+    <div class="bg-white mx-3 p-4 rounded-2xl shadow-md flex justify-between items-center -mt-4 relative z-10 border border-gray-50">
+        <div>
+            <p class="text-gray-400 text-[10px] uppercase font-bold tracking-tighter">Current Balance</p>
+            <h3 class="text-2xl font-black text-gray-800">Rs 0.00</h3>
+        </div>
+        <button class="teal-theme text-white px-8 py-3 rounded-xl font-black shadow-lg hover:brightness-110 active:scale-95 transition-all uppercase text-sm">Deposit</button>
+    </div>
+
+    <div class="flex gap-3 overflow-x-auto p-4 no-scrollbar">
+        <button class="teal-theme text-white px-5 py-1.5 rounded-full text-xs font-bold shadow-md">All</button>
+        <button class="bg-white text-gray-500 px-5 py-1.5 rounded-full text-xs font-bold shadow-sm border border-gray-200">Original</button>
+        <button class="bg-white text-gray-500 px-5 py-1.5 rounded-full text-xs font-bold shadow-sm border border-gray-200">Slots</button>
+        <button class="bg-white text-gray-500 px-5 py-1.5 rounded-full text-xs font-bold shadow-sm border border-gray-200">Lottery</button>
+    </div>
+
+    <div class="game-grid">
+        <div class="game-card bg-gradient-to-br from-red-500 to-red-700">
+            <i class="fas fa-plane-departure text-3xl mb-2"></i> Aviator
+        </div>
+        <div class="game-card bg-gradient-to-br from-blue-600 to-blue-800">
+            <i class="fas fa-bomb text-3xl mb-2"></i> Mines
+        </div>
+        <div class="game-card bg-gradient-to-br from-orange-500 to-yellow-600 text-blue-900">
+            <i class="fas fa-coins text-3xl mb-2"></i> Fortune
+        </div>
+        <div class="game-card bg-gradient-to-br from-green-500 to-teal-700">
+            <i class="fas fa-dice text-3xl mb-2"></i> WinGo
+        </div>
+        <div class="game-card bg-gradient-to-br from-indigo-600 to-purple-800">
+            <i class="fas fa-futbol text-3xl mb-2"></i> Penalty
+        </div>
+        <div class="game-card bg-gradient-to-br from-pink-600 to-rose-800">
+            <i class="fas fa-egg text-3xl mb-2"></i> Chicken
         </div>
     </div>
 
-    <script>
-        window.onload = function() {
-            setTimeout(function() {
-                document.getElementById('splash-screen').style.opacity = '0';
-                document.getElementById('splash-screen').style.transition = '0.5s';
-                setTimeout(function() {
-                    document.getElementById('splash-screen').style.display = 'none';
-                    document.getElementById('main-site').style.display = 'block';
-                    document.body.style.overflow = 'auto';
-                }, 500);
-            }, 3500); // 3.5 seconds loading
-        };
-    </script>
+    <div class="bg-white mx-3 my-4 p-3 rounded-xl border border-gray-200 flex items-center gap-3 shadow-sm">
+        <div class="bg-orange-100 p-2 rounded-full"><i class="fas fa-bullhorn text-orange-500 text-xs"></i></div>
+        <marquee class="text-[11px] text-gray-600 font-bold">User***786 won Rs 500 in Aviator | User***442 won Rs 1,250 in Mines | User***001 won Rs 3,000 in Fortune Gems</marquee>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="flex flex-col items-center text-teal-600 font-black">
+            <i class="fas fa-home text-lg"></i>
+            <span class="text-[9px]">HOME</span>
+        </div>
+        <div class="flex flex-col items-center text-gray-400 font-bold">
+            <i class="fas fa-trophy text-lg"></i>
+            <span class="text-[9px]">ACTIVITY</span>
+        </div>
+        <div class="flex flex-col items-center text-gray-400 font-bold">
+            <i class="fas fa-bullhorn text-lg"></i>
+            <span class="text-[9px]">PROMO</span>
+        </div>
+        <div class="flex flex-col items-center text-gray-400 font-bold">
+            <i class="fas fa-user-circle text-lg"></i>
+            <span class="text-[9px]">ACCOUNT</span>
+        </div>
+    </nav>
+
 </body>
 </html>
