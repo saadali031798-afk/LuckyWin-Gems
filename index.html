@@ -3,98 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucky Win Gems - Professional</title>
+    <title>Lucky Win Gems - All Games</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .teal-theme { background-color: #00a884; }
-        .game-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 10px; }
-        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px; border-top: 1px solid #ddd; z-index: 100; }
-        .banner-slide { width: 100%; height: 160px; background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); border-radius: 15px; margin: 10px 0; display: flex; align-items: center; justify-content: center; color: white; overflow: hidden; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f1f4f3; }
+        .teal-gradient { background: linear-gradient(180deg, #00b894 0%, #019a78 100%); }
+        .blue-banner { background: linear-gradient(90deg, #1e3799 0%, #0984e3 100%); border-radius: 15px; }
+        .game-item { background: white; border-radius: 12px; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eef0f1; }
+        .game-icon { width: 50px; height: 50px; border-radius: 10px; margin-bottom: 5px; display: flex; items-center; justify-content: center; color: white; font-size: 24px; }
+        .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #ddd; z-index: 100; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .game-card { border-radius: 12px; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 11px; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .section-title { font-weight: 800; font-size: 14px; color: #2d3436; margin: 15px 15px 5px 15px; display: flex; align-items: center; gap: 5px; }
     </style>
 </head>
-<body class="bg-gray-100 pb-24">
+<body class="pb-24">
 
-    <header class="teal-theme p-4 flex justify-between items-center text-white sticky top-0 z-50 shadow-md">
+    <header class="teal-gradient p-4 flex justify-between items-center text-white sticky top-0 z-50 shadow-md">
         <div class="flex items-center gap-2">
-            <i class="fas fa-gem text-xl"></i>
-            <span class="font-bold tracking-wider text-lg">LUCKY WIN GEMS</span>
+            <i class="fas fa-gem"></i>
+            <span class="font-black italic tracking-tighter">LUCKY WIN GEMS</span>
         </div>
         <div class="flex gap-4 items-center">
-            <button class="bg-white text-teal-600 px-3 py-1 rounded-full text-[10px] font-black uppercase">Download</button>
+            <button class="bg-yellow-400 text-teal-900 px-3 py-1 rounded-full text-[10px] font-black shadow-lg">APP DOWNLOAD</button>
             <i class="fas fa-headset text-lg"></i>
         </div>
     </header>
 
-    <div class="px-3 mt-2">
-        <div class="banner-slide shadow-lg">
-            <div class="text-center p-4">
-                <h2 class="text-2xl font-black italic mb-1 text-white">SUPER BONUS!</h2>
-                <p class="text-xs opacity-90 text-white">First Deposit Get 100% Free Gems</p>
-                <div class="mt-2 bg-yellow-400 text-blue-900 px-4 py-1 rounded-full text-[10px] font-bold inline-block">CLAIM NOW</div>
+    <div class="p-3">
+        <div class="blue-banner h-32 flex items-center p-4 relative overflow-hidden shadow-lg">
+            <div class="z-10">
+                <h2 class="text-white font-black italic text-xl">CHICKEN ROAD 2</h2>
+                <p class="text-white text-[10px] opacity-80">Win daily rewards up to 100k</p>
+                <button class="mt-2 bg-white text-blue-800 px-4 py-1 rounded-full text-[9px] font-black">PLAY NOW</button>
+            </div>
+            <i class="fas fa-rocket text-7xl text-white opacity-10 absolute -right-2 top-2 rotate-12"></i>
+        </div>
+    </div>
+
+    <div class="bg-white mx-3 p-4 rounded-xl shadow-sm flex justify-between items-center border border-gray-100">
+        <div class="flex items-center gap-3">
+            <div class="bg-teal-100 p-2 rounded-full"><i class="fas fa-wallet text-teal-600"></i></div>
+            <div>
+                <p class="text-gray-400 text-[10px] font-bold uppercase">Balance</p>
+                <h3 class="text-xl font-black">Rs 0.00</h3>
             </div>
         </div>
+        <button class="bg-orange-500 text-white px-6 py-2 rounded-lg font-black shadow-md">DEPOSIT</button>
     </div>
 
-    <div class="bg-white mx-3 p-4 rounded-2xl shadow-md flex justify-between items-center -mt-4 relative z-10 border border-gray-50">
-        <div>
-            <p class="text-gray-400 text-[10px] uppercase font-bold tracking-tighter">Current Balance</p>
-            <h3 class="text-2xl font-black text-gray-800">Rs 0.00</h3>
-        </div>
-        <button class="teal-theme text-white px-8 py-3 rounded-xl font-black shadow-lg hover:brightness-110 active:scale-95 transition-all uppercase text-sm">Deposit</button>
+    <div class="flex gap-4 overflow-x-auto p-4 no-scrollbar">
+        <button class="bg-teal-500 text-white px-6 py-1.5 rounded-full text-xs font-bold shadow-md">All</button>
+        <button class="bg-white text-gray-500 px-6 py-1.5 rounded-full text-xs font-bold shadow-sm">Lottery</button>
+        <button class="bg-white text-gray-500 px-6 py-1.5 rounded-full text-xs font-bold shadow-sm">Original</button>
+        <button class="bg-white text-gray-500 px-6 py-1.5 rounded-full text-xs font-bold shadow-sm">Slots</button>
     </div>
 
-    <div class="flex gap-3 overflow-x-auto p-4 no-scrollbar">
-        <button class="teal-theme text-white px-5 py-1.5 rounded-full text-xs font-bold shadow-md">All</button>
-        <button class="bg-white text-gray-500 px-5 py-1.5 rounded-full text-xs font-bold shadow-sm border border-gray-200">Original</button>
-        <button class="bg-white text-gray-500 px-5 py-1.5 rounded-full text-xs font-bold shadow-sm border border-gray-200">Slots</button>
-        <button class="bg-white text-gray-500 px-5 py-1.5 rounded-full text-xs font-bold shadow-sm border border-gray-200">Lottery</button>
-    </div>
-
-    <div class="game-grid">
-        <div class="game-card bg-gradient-to-br from-red-500 to-red-700">
-            <i class="fas fa-plane-departure text-3xl mb-2"></i> Aviator
+    <div class="section-title"><i class="fas fa-fire text-red-500"></i> HOT GAMES</div>
+    <div class="grid grid-cols-3 gap-3 px-3">
+        <div class="game-item">
+            <div class="game-icon bg-red-500 shadow-inner"><i class="fas fa-plane"></i></div>
+            <span class="text-[9px] font-black">AVIATOR</span>
         </div>
-        <div class="game-card bg-gradient-to-br from-blue-600 to-blue-800">
-            <i class="fas fa-bomb text-3xl mb-2"></i> Mines
+        <div class="game-item">
+            <div class="game-icon bg-blue-600 shadow-inner"><i class="fas fa-bomb"></i></div>
+            <span class="text-[9px] font-black">MINES</span>
         </div>
-        <div class="game-card bg-gradient-to-br from-orange-500 to-yellow-600 text-blue-900">
-            <i class="fas fa-coins text-3xl mb-2"></i> Fortune
-        </div>
-        <div class="game-card bg-gradient-to-br from-green-500 to-teal-700">
-            <i class="fas fa-dice text-3xl mb-2"></i> WinGo
-        </div>
-        <div class="game-card bg-gradient-to-br from-indigo-600 to-purple-800">
-            <i class="fas fa-futbol text-3xl mb-2"></i> Penalty
-        </div>
-        <div class="game-card bg-gradient-to-br from-pink-600 to-rose-800">
-            <i class="fas fa-egg text-3xl mb-2"></i> Chicken
+        <div class="game-item">
+            <div class="game-icon bg-yellow-500 shadow-inner"><i class="fas fa-gem"></i></div>
+            <span class="text-[9px] font-black">FORTUNE</span>
         </div>
     </div>
 
-    <div class="bg-white mx-3 my-4 p-3 rounded-xl border border-gray-200 flex items-center gap-3 shadow-sm">
-        <div class="bg-orange-100 p-2 rounded-full"><i class="fas fa-bullhorn text-orange-500 text-xs"></i></div>
-        <marquee class="text-[11px] text-gray-600 font-bold">User***786 won Rs 500 in Aviator | User***442 won Rs 1,250 in Mines | User***001 won Rs 3,000 in Fortune Gems</marquee>
+    <div class="section-title"><i class="fas fa-ticket text-teal-500"></i> LOTTERY</div>
+    <div class="grid grid-cols-3 gap-3 px-3">
+        <div class="game-item">
+            <div class="game-icon bg-teal-600 shadow-inner"><i class="fas fa-dice"></i></div>
+            <span class="text-[9px] font-black">WINGO</span>
+        </div>
+        <div class="game-item">
+            <div class="game-icon bg-purple-600 shadow-inner"><i class="fas fa-star"></i></div>
+            <span class="text-[9px] font-black">5D LOTRE</span>
+        </div>
+        <div class="game-item">
+            <div class="game-icon bg-pink-600 shadow-inner"><i class="fas fa-circle-dot"></i></div>
+            <span class="text-[9px] font-black">K3 LOTRE</span>
+        </div>
+    </div>
+
+    <div class="section-title"><i class="fas fa-gamepad text-indigo-500"></i> SLOTS & FISHING</div>
+    <div class="grid grid-cols-3 gap-3 px-3">
+        <div class="game-item">
+            <div class="game-icon bg-orange-600 shadow-inner"><i class="fas fa-fish"></i></div>
+            <span class="text-[9px] font-black">FISHING</span>
+        </div>
+        <div class="game-item">
+            <div class="game-icon bg-green-600 shadow-inner"><i class="fas fa-futbol"></i></div>
+            <span class="text-[9px] font-black">PENALTY</span>
+        </div>
+        <div class="game-item">
+            <div class="game-icon bg-indigo-700 shadow-inner"><i class="fas fa-egg"></i></div>
+            <span class="text-[9px] font-black">CHICKEN</span>
+        </div>
+        <div class="game-item">
+            <div class="game-icon bg-amber-700 shadow-inner"><i class="fas fa-clover"></i></div>
+            <span class="text-[9px] font-black">777 SLOT</span>
+        </div>
+        <div class="game-item">
+            <div class="game-icon bg-red-700 shadow-inner"><i class="fas fa-dragon"></i></div>
+            <span class="text-[9px] font-black">DRAGON</span>
+        </div>
+        <div class="game-item">
+            <div class="game-icon bg-sky-500 shadow-inner"><i class="fas fa-water"></i></div>
+            <span class="text-[9px] font-black">OCEAN</span>
+        </div>
+    </div>
+
+    <div class="bg-white m-3 p-4 rounded-xl border border-gray-100 shadow-sm">
+        <p class="text-[10px] font-black text-gray-400 mb-3 uppercase">Real-Time Winners</p>
+        <div class="space-y-3">
+            <div class="flex justify-between items-center text-[10px]">
+                <span class="font-bold text-gray-700">User***521</span>
+                <span class="bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full font-black">Rs 5,420.00</span>
+            </div>
+            <div class="flex justify-between items-center text-[10px]">
+                <span class="font-bold text-gray-700">User***099</span>
+                <span class="bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full font-black">Rs 1,200.00</span>
+            </div>
+            <div class="flex justify-between items-center text-[10px]">
+                <span class="font-bold text-gray-700">User***786</span>
+                <span class="bg-teal-100 text-teal-700 px-2 py-0.5 rounded-full font-black">Rs 15,000.00</span>
+            </div>
+        </div>
     </div>
 
     <nav class="bottom-nav">
         <div class="flex flex-col items-center text-teal-600 font-black">
             <i class="fas fa-home text-lg"></i>
-            <span class="text-[9px]">HOME</span>
+            <span class="text-[9px] mt-1">HOME</span>
         </div>
         <div class="flex flex-col items-center text-gray-400 font-bold">
-            <i class="fas fa-trophy text-lg"></i>
-            <span class="text-[9px]">ACTIVITY</span>
+            <i class="fas fa-gift text-lg"></i>
+            <span class="text-[9px] mt-1">ACTIVITY</span>
         </div>
         <div class="flex flex-col items-center text-gray-400 font-bold">
-            <i class="fas fa-bullhorn text-lg"></i>
-            <span class="text-[9px]">PROMO</span>
+            <i class="fas fa-share-nodes text-lg"></i>
+            <span class="text-[9px] mt-1">PROMO</span>
         </div>
         <div class="flex flex-col items-center text-gray-400 font-bold">
             <i class="fas fa-user-circle text-lg"></i>
-            <span class="text-[9px]">ACCOUNT</span>
+            <span class="text-[9px] mt-1">ACCOUNT</span>
         </div>
     </nav>
 
